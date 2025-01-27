@@ -21,7 +21,7 @@ public class Main {
         K = Integer.parseInt(st.nextToken());
 
         arr = new int[N][M];
-        visited = new boolean[N + 1][M + 1];
+        visited = new boolean[N][M];
         answer = Integer.MIN_VALUE; // integer 최소값
 
         // 입력
@@ -32,47 +32,36 @@ public class Main {
             }
         }
 
-        dfs(0, 0, 0, 0);
+        dfs(0, 0, 0);
         System.out.println(answer);
 
     }
 
-    public static void dfs(int x, int y, int depth, int sum) {
-
+    private void dfs(int startIdx, int depth, int sum) {
         if (depth == K) {
             answer = Math.max(answer, sum);
             return;
         }
-
-        else {
-            for (int i = x; i < N; i++) {
-                for (int j = y; j < M; j++) {
-                    if (!visited[i][j]) {
-                        if (check(i, j)) {
-                            visited[i][j] = true;
-                            dfs(x, y, depth + 1, sum + arr[i][j]);
-                            visited[i][j] = false;
-                        }
-                    }
-                }
+        for (int idx = startIdx; idx < N * M; idx++) {
+            int i = idx / M;
+            int j = idx % M;
+            if (check(i, j)) {
+                visited[i][j] = true;
+                dfs(idx + 1, depth + 1, sum + arr[i][j]);
+                visited[i][j] = false;
             }
         }
-
     }
 
-    public static boolean check(int x, int y) {
-        boolean flag = true;
-        for (int i = 0; i < 4; i++) {
-            int next_x = x + dx[i];
-            int next_y = y + dy[i];
-
-            if (next_x >= 0 && next_x < N && next_y >= 0 && next_y < M) {
-                if (visited[next_x][next_y]) {
-                    flag = false;
-                }
+    private boolean check(int x, int y) {
+        for (int d = 0; d < 4; d++) {
+            int nx = x + dx[d];
+            int ny = y + dy[d];
+            if (nx >= 0 && nx < N && ny >= 0 && ny < M && visited[nx][ny]) {
+                return false;
             }
         }
-        return flag;
+        return true;
     }
 
 
