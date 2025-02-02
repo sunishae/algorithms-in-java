@@ -24,28 +24,26 @@ public class Main {
             arr[i] = Integer.parseInt(st2.nextToken());
         }
 
-        // 부분 집합 탐색
-        for (int i = 1; i <= n; i++) {
-            dfs(0, 0, 0, i);
-        }
+        dfs(0, 0);
 
-        // 결과 출력
+        if( s==0) cnt--;
+
+
         bw.write(cnt + "\n");
         bw.flush();
         bw.close();
     }
 
-    public static void dfs(int start, int depth, int sum, int limit) {
-        if (depth == limit) {
+    public static void dfs(int depth, int sum) {
+        if (depth == n) {
             if (sum == s) {
                 cnt++;
             }
             return;
         }
+        dfs(depth + 1, sum + arr[depth]);
+        dfs(depth + 1, sum);
 
-        for (int i = start; i < n; i++) {
-            dfs(i + 1, depth + 1, sum + arr[i], limit);
-        }
     }
 
     public static void main(String[] args) throws Exception {
