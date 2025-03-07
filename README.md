@@ -1,2 +1,2 @@
 # algorithms-in-java
-This is an auto push repository for Baekjoon Online Judge created with [BaekjoonHub](https://github.com/BaekjoonHub/BaekjoonHub).
+자바로 푼 알고리즘 문제들
