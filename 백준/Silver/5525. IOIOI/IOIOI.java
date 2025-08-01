@@ -13,24 +13,31 @@ public class Main {
         M = Integer.parseInt(br.readLine());
         S = br.readLine();
 
-        String comp = "IO";
-        for (int i = 0; i < N - 1; i++) {
-            comp = comp + "IO";
-        }
-        comp = comp + "I";
-
-        int cnt = 0;
-        int idx = 0;
-        while(idx < M){
-            idx = S.indexOf(comp, idx);
-            if(idx == -1) break;
-            cnt++;
-            idx++;
-        }
+        int cnt = getCnt();
 
         bw.write(cnt + "");
         bw.flush();
         bw.close();
+    }
+
+    private static int getCnt() {
+        int cnt = 0;
+        for (int i = 0; i < M; i++) {
+            if (S.charAt(i) == 'I') {
+                int oiCnt = 0;
+                while (true) {
+                    if (i + 2 >= M) break;
+                    if (S.substring(i + 1, i + 3).compareTo("OI") == 0) {
+                        oiCnt++;
+                        i += 2;
+                    } else break;
+                }
+                if (oiCnt >= N) {
+                    cnt += (oiCnt - N + 1);
+                }
+            }
+        }
+        return cnt;
     }
 
     public static void main(String[] args) throws IOException{
